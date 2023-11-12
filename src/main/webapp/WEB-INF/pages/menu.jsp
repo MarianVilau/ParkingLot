@@ -16,6 +16,11 @@
                         ${pageContext.request.requestURI.substring(pageContext.request.requestURI.lastIndexOf("/")) eq '/about.jsp' ? ' active' : ''}
                            aria-current="page" href="${pageContext.request.contextPath}/about.jsp">About</a>
                     </li>
+                    <c:if test="${pageContext.request.isUserInRole('AdminRole')}">
+                        <li class="nav-item ${activePage eq 'Cars' ? ' active' : ''}">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/Cars">Cars</a>
+                        </li>
+                    </c:if>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="#">Link</a>
                     </li>
