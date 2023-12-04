@@ -36,5 +36,6 @@ public class Cars extends HttpServlet {
             }
             carsBean.deleteCarsByIds(carIds);
         }
+        response.sendRedirect(request.getContextPath() + "/Cars");
     }
 }
