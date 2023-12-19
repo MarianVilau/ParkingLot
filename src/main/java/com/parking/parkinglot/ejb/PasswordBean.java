@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@RequestScoped
+
 @Stateless
 public class PasswordBean {
     private static final Logger LOG = Logger.getLogger(PasswordBean.class.getName());
@@ -19,8 +19,8 @@ public class PasswordBean {
             messageDigest.update(password.getBytes(StandardCharsets.UTF_8));
             byte[] digest = messageDigest.digest();
             final StringBuilder hexString = new StringBuilder();
-            for (int i = 0; i < digest.length; i++) {
-                final String hex = Integer.toHexString(0xff & digest[i]);
+            for (byte b : digest) {
+                final String hex = Integer.toHexString(0xff & b);
                 if (hex.length() == 1) {
                     hexString.append('0');
                 }
