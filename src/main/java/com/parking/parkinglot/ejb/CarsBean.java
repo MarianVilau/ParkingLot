@@ -10,6 +10,8 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -104,5 +106,11 @@ public class CarsBean {
         CarPhoto photo = photos.get(0); // the first element
         return new CarPhotoDto(photo.getId(), photo.getFileName(), photo.getFileType(),
                 photo.getFileContent());
+    }
+    public int countCars() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        cq.select(cb.count(cq.from(Car.class)));
+        return Math.toIntExact(entityManager.createQuery(cq).getSingleResult());
     }
 }

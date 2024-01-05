@@ -5,7 +5,7 @@
 <t:pageTemplate pageTitle="Users">
     <h1>Users</h1>
     <form method="POST" action="${pageContext.request.contextPath}/Users">
-        <c:if test="${pageContext.request.isUserInRole('WRITE_USERS')}">
+        <c:if test="${pageContext.request.isUserInRole('INVOICING')}">
             <a href="${pageContext.request.contextPath}/AddUser" class="btn btn-primary btn-lg">Add User</a>
             <button class="btn btn-secondary" type="submit">Invoice</button>
         </c:if>

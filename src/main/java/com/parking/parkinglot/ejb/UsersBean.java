@@ -1,6 +1,8 @@
 package com.parking.parkinglot.ejb;
 
+import com.parking.parkinglot.common.CarDto;
 import com.parking.parkinglot.common.UserDto;
+import com.parking.parkinglot.entities.Car;
 import com.parking.parkinglot.entities.User;
 import com.parking.parkinglot.entities.UserGroup;
 import jakarta.ejb.EJBException;
@@ -59,6 +61,30 @@ public class UsersBean {
         return entityManager.createQuery("SELECT u.username FROM User u WHERE u.id IN :userIds", String.class)
                 .setParameter("userIds", userIds)
                 .getResultList();
+    }
+    public UserDto findById(Long userId) {
+        User user = entityManager.find(User.class, userId);
+        return new UserDto(user.getId(), user.getEmail(), user.getUsername(), user.getPassword());
+    }
+    public void updateUserWithPassword(Long userId, String username, String email, String password) {
+        LOG.info("updateUserWithPassword");
+
+        User user = entityManager.find(User.class, userId);
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(passwordBean.convertToSha256(password));
+
+        entityManager.persist(user);
+    }
+
+    public void updateUserWithoutPassword(Long userId, String username, String email) {
+        LOG.info("updateUserWithoutPassword");
+
+        User user = entityManager.find(User.class, userId);
+        user.setUsername(username);
+        user.setEmail(email);
+
+        entityManager.persist(user);
     }
 }
 
